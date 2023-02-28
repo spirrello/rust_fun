@@ -17,7 +17,9 @@ fn main() {
         .value("son".to_owned())
         .build();
 
-    fields_builder.add_fields(field1).add_fields(field2);
+    fields_builder.add_fields(field1);
+
+    fields_builder.add_fields(field2);
 
     for x in fields_builder.fields.iter() {
         println!("{:?}", x);
@@ -26,7 +28,7 @@ fn main() {
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct FieldItem {
-    pub short: Option<bool>,
+    pub short: bool,
     pub title: String,
     pub value: String,
 }
@@ -56,7 +58,7 @@ impl FieldItemBuilder {
     }
     fn build(&mut self) -> FieldItem {
         FieldItem {
-            short: Some(self.short.clone().unwrap_or_default()),
+            short: self.short.clone().unwrap_or_default(),
             title: self.title.clone().unwrap(),
             value: self.value.clone().unwrap(),
         }
